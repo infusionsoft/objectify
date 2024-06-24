@@ -133,17 +133,12 @@ public class ObjectifyImpl implements Objectify, Closeable
 
 	/** Same transactor, different options */
 	ObjectifyImpl options(final ObjectifyOptions opts) {
-		return makeNew(opts, transactor);
+		return factory().createObjectify(opts, transactor);
 	}
 
 	/** Same options, different transactor */
 	ObjectifyImpl transactor(final Transactor transactor) {
-		return makeNew(options, transactor);
-	}
-
-	/** Can be overriden if you want to subclass the ObjectifyImpl */
-	protected ObjectifyImpl makeNew(final ObjectifyOptions opts, final Transactor transactor) {
-		return new ObjectifyImpl(factory, opts, transactor);
+		return factory().createObjectify(options, transactor);
 	}
 
 	/* (non-Javadoc)

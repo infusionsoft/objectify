@@ -371,19 +371,30 @@ public class ObjectifyFactory implements Forge
 	 * <p>This will be removed from the public API in the future.</p>
 	 */
 	private ObjectifyImpl open() {
-		final ObjectifyImpl objectify = new ObjectifyImpl(this);
+		final ObjectifyImpl objectify = createObjectify();
 		stacks.get().add(objectify);
 		return objectify;
 	}
 
 	/** This is for internal housekeeping and is not part of the public API */
 	public ObjectifyImpl open(final ObjectifyOptions opts, final Transactor transactor) {
-		final ObjectifyImpl objectify = new ObjectifyImpl(this, opts, transactor);
+		final ObjectifyImpl objectify = createObjectify(opts, transactor);
 		stacks.get().add(objectify);
 		return objectify;
 	}
 
-	/** This is for internal housekeeping and is not part of the public API */
+    /** Can be overridden if you want to subclass ObjectifyImpl */
+    protected ObjectifyImpl createObjectify() {
+        return new ObjectifyImpl(this);
+    }
+
+    /** This is only public because it is used from the impl package, and is not part of the
+     * public API. However, it can be overridden if you want to subclass ObjectifyImpl. */
+    public ObjectifyImpl createObjectify(final ObjectifyOptions opts, final Transactor transactor) {
+        return new ObjectifyImpl(this, opts, transactor);
+    }
+
+    /** This is for internal housekeeping and is not part of the public API */
 	public void close(final Objectify ofy) {
 		final Deque<Objectify> stack = stacks.get();
 		if (stack.isEmpty())
