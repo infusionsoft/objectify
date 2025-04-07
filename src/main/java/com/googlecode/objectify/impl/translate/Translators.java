@@ -33,7 +33,7 @@ public class Translators
 
 	/** Where we should insert new translators */
 	private int insertPoint;
-	
+
 	/** Where we should insert new early translators */
 	private int earlyInsertPoint;
 
@@ -87,6 +87,14 @@ public class Translators
 		this.translatorFactories.add(new LatLngTranslatorFactory());
 		this.translatorFactories.add(new BlobTranslatorFactory());
 		this.translatorFactories.add(new RawValueTranslatorFactory());
+		this.translatorFactories.add(new BigDecimalTranslatorFactory());
+		this.translatorFactories.add(new InstantTimeTranslatorFactory());
+		this.translatorFactories.add(new LocalDateTranslatorFactory());
+		this.translatorFactories.add(new LocalDateTimeTranslatorFactory());
+		this.translatorFactories.add(new LocaleTranslatorFactory());
+		this.translatorFactories.add(new OffsetDateTimeTranslatorFactory());
+		this.translatorFactories.add(new ZonedDateTimeTranslatorFactory());
+		this.translatorFactories.add(new ZoneIdTranslatorFactory());
 		this.translatorFactories.add(new ObjectTranslatorFactory(this));
 
 		// LAST! It catches everything.
@@ -104,7 +112,7 @@ public class Translators
 		this.translatorFactories.add(insertPoint, trans);
 		insertPoint++;
 	}
-	
+
 	/**
 	 * <p>Add a new translator to the beginning of the list, before all other translators
 	 * except other translators that have been added early.</p>
